@@ -1,0 +1,40 @@
+---
+title: "PS270 Final Project"
+author: "Chloe Burreson"
+description: "My Final Project"
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+
+## Project thoughts (Milestone One)
+
+I am interested in exploring data related to...
+
+  I was think about explore data in regards to opinion polls. Last semester I did minor research using A.N.E.S (American National Election Studies) which is academically run and observes voters behavior and opinion before and after entering the voting booth. I found analyzing the data to be quite interesting! While I may not necessarily be able to use ANES data for this final project I think working with data opinion polls in general could be quite interesting. 
+
+  I think another area of possible interest could be looking at data in regards to debts or financial crisis, global and/or domestic. I tend to find information and exploring into the statics and numbers resulting from financial crisis all to be quite fascinating.
+
+## Research Question and Hypothesis (Milestone Two)
+  
+For this project I decided to head in the direction of examining the approval rating of governor in office. As it combines my interest for public opinion with that of something of a measurable nature, approval rating. I found this data set, SEAD governor quarterly v1, in particular to be quite interesting as it particularly examines something known as the "honeymoon" effect, the effect that when a new governor is in office the public approval is relatively standard, but the level of outright disapproval is low in overarching comparison. Yet, with such a period I am curious as to what extent does this protection go, leading to my question. To what extent does the "honeymoon period", the first three quarters in office, effect the negative impact of high unemployment on a governor's approval rating? My current working hypothesis is that the relationship between unemployment and governor's approval will be weaker during the first three quarters of a governor's initial term in comparison to later quarters. This logistically make sense as in early on when a governor begins in office, voters are more forgiving and possibly blame any current issue on the former governor. As the initial period ends, economic issues become more closely tied to the current figure in the governor's office as people, voters, hold them more accountable for the current status of their state's economy. If my hypothesis is wrong I expect to see the same negative impact due to unemployment within the first quarter of office as of that in later quarters. For this project my independent variable would be the average unemployment rate for the quarter within the state which is measured as a continuous percentage. My dependent would be the Executive Approval Smoothed, which is the latent measure of governor approval within the data set. Furthermore due to the nature of the question my moderators would be examine the relationship between my independent and dependent variable within the first and third quarter approval rates. With these factors as my variables within this observational study would allow myself to conduct a fair analysis of the data and explore my hypothesis effectively.
+  
+  
+```{r}
+library(haven)
+library(dplyr)
+
+data_approval <- read_dta("SEAD governor quarterly v1.dta")
+data_controls <- read_dta("controls for table 3.dta")
+combinded_data <- data_approval %>%
+  left_join(data_controls, by = c("state", "year", "quarter"))
+
+milestone_data <- combinded_data %>%
+  select(state, year, quarter, Approval_Smoothed, unemployment_state, quarter1_first_valid, quarter2_first_valid, quarter3_first_valid)
+
+head(milestone_data)
+```
+
+  
